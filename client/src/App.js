@@ -28,6 +28,11 @@ function App() {
 
   return (
     <div className="App">
+      <div className="title">
+        APtracker
+      </div>
+
+
       {data.map((element, index) => (
         <AP key={index} data={element} />
       ))}

@@ -1,6 +1,16 @@
+*{
+  box-sizing: border-box;
+}
 .App {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+.title{
+  font-family: 'IBM Plex Mono', 'Inconsolata', 'Source Code Pro', 'Consolas', monospace;
+  font-weight: 900;
+  font-size: 50px;
+  margin-bottom: 20px;
+  color:#004953;
 }
