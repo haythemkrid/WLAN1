@@ -1,47 +1,37 @@
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import {AP} from "./components/AP.jsx"
-import io from 'socket.io-client';
+import { AP } from "./components/AP.jsx";
+
 function App() {
-  const [data,setData] = useState([{}])
-   const [isConnected, setIsConnected] = useState(false);
- useEffect(() => {
-    // Connect to the WebSocket server
-    const socket = io('http://127.0.0.1:5000'); // Adjust to your backend URL if different
+  const [data, setData] = useState([{}]);
 
-    // Listen for connection events
-    socket.on('connect', () => {
-      console.log('Successfully connected to the WebSocket server');
-      setIsConnected(true);
-    });
+  useEffect(() => {
+    const fetchData = () => {
+      fetch("http://127.0.0.1:5000/PickYourWifi") // Adjust to your backend URL if different
+        .then(res => res.json())
+        .then(receivedData => {
+          setData(receivedData);
+          console.log("Received data:", receivedData);
+        })
+        .catch(error => console.error("Error fetching data:", error));
+    };
 
-    socket.on('disconnect', () => {
-      console.log('Disconnected from the WebSocket server');
-      setIsConnected(false);
-    });
+    // Fetch data initially
+    fetchData();
 
-    // Listen for 'update' events from the backend
-    socket.on('update', (message) => {
-      setData(message.data);
-      console.log('Received data:', message.data);
-    });
+    // Set up interval to fetch data every 1 second (1000 ms)
+    const intervalId = setInterval(fetchData, 1000);
 
-    // Listen for connection error events
-    socket.on('connect_error', (error) => {
-      console.error('Connection Error:', error);
-    });
-
-    // Cleanup: Disconnect socket when component unmounts
-    return () => socket.disconnect();
+    // Clean up: clear interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
-      <div className="App">
-          {
-            data.map((element)=> <AP data={element}></AP>)
-          }
-      </div>
-
+    <div className="App">
+      {data.map((element, index) => (
+        <AP key={index} data={element} />
+      ))}
+    </div>
   );
 }
 

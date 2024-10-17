@@ -1,5 +1,4 @@
-from flask import Flask
-from flask_socketio import SocketIO
+from flask import Flask, jsonify
 from flask_cors import CORS
 import subprocess
 import re
@@ -8,7 +7,6 @@ import time
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for the Flask app
-socketio = SocketIO(app, cors_allowed_origins="*")  # Enable CORS for SocketIO
 
 class APTracker():
     def __init__(self):
@@ -43,9 +41,6 @@ class APTracker():
                                     ap = ap[length:]
                                 self.APs.append(AP)
 
-                        # Emit the updated list of APs via WebSocket
-                        socketio.emit('update', {'data': self.APs})
-
                     else:
                         print("No matches found in the properties header.")  # Debug info
 
@@ -60,13 +55,11 @@ apt = APTracker()
 def background_fetch():
     apt.fetch_APs()
 
-
 threading.Thread(target=background_fetch, daemon=True).start()
+
 @app.route("/PickYourWifi")
 def PickYourWifi():
-    return apt.APs
-
-
+    return jsonify(apt.APs)
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True)  # Corrected line
