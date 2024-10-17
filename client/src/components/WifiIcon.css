@@ -1,0 +1,38 @@
+.wifi-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.wifi-bar {
+    width: 10px; /* Width of each bar */
+    height: 5px; /* Height of inactive bar */
+    margin: 2px 0;
+    background-color: #ccc; /* Color of inactive bars */
+    transition: height 0.3s ease, background-color 0.3s ease;
+}
+
+.wifi-bar.active {
+    background-color: #4caf50; /* Color of active bars */
+}
+
+.wifi-bar:nth-child(1) {
+    height: 5px; /* Height for 1 bar */
+}
+
+.wifi-bar:nth-child(2) {
+    height: 10px; /* Height for 2 bars */
+}
+
+.wifi-bar:nth-child(3) {
+    height: 15px; /* Height for 3 bars */
+}
+
+.wifi-bar:nth-child(4) {
+    height: 20px; /* Height for 4 bars */
+}
+
+.wifi-bar:nth-child(5) {
+    height: 25px; /* Height for 5 bars */
+}

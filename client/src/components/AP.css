@@ -1,10 +1,16 @@
-.AP-container{
-    display:flex;
+/* AP.css */
+.AP-container {
+    display: flex;
     flex-direction: column;
-    width:150px;
-    height:150px;
-    background-color:indianred;
+    align-items: center; /* Center elements horizontally */
+    width: 150px;
+    height: 150px;
+    background-color: indianred;
 }
-p{
+
+p {
     font-size: 15px;
 }
+
+/* HTML: <div class="wifi-icon"></div> */
+
