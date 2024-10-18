@@ -1,0 +1,42 @@
+*{
+  box-sizing: border-box;
+}
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.title{
+  font-family: 'IBM Plex Mono', 'Inconsolata', 'Source Code Pro', 'Consolas', monospace;
+  font-weight: 900;
+  font-size: 50px;
+  margin-bottom: 20px;
+  color:#004953;
+}
+.sort-buttons {
+  margin-bottom: 20px;
+}
+
+button {
+  margin: 0 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #4caf50; /* Default button color */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth background color change */
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* Style for active button */
+button.active {
+  background-color: transparent; /* Clear background */
+  color: #4caf50; /* Change text color to green */
+  border: 2px solid #4caf50; /* Add a green border */
+}

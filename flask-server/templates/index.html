@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiFi Access Points</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .ap-container {
+            padding: 20px;
+        }
+        .ap {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .ap p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>WiFi Access Points</h1>
+    <div id="ap-list" class="ap-container"></div>
+
+    <script>
+        const socket = io('http://127.0.0.1:5000');
+
+        socket.on('connect', () => {
+            console.log('Connected to the WebSocket server');
+        });
+
+        socket.on('update', (message) => {
+            const apList = document.getElementById("ap-list");
+            apList.innerHTML = ""; // Clear existing data
+            message.data.forEach(ap => {
+                const apElement = document.createElement("div");
+                apElement.className = "ap";
+                apElement.innerHTML = `
+                    <p><strong>BSSID:</strong> ${ap.BSSID}</p>
+                    <p><strong>SSID:</strong> ${ap.SSID}</p>
+                    <p><strong>Rate:</strong> ${ap.RATE}</p>
+                    <p><strong>Signal:</strong> ${ap.SIGNAL}</p>
+                `;
+                apList.appendChild(apElement);
+            });
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from the WebSocket server');
+        });
+    </script>
+</body>
+</html>
